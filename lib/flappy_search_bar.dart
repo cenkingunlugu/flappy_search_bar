@@ -195,7 +195,7 @@ class SearchBar<T> extends StatefulWidget {
 
   /// Called to get the tile at the specified index for the
   /// [SliverGridStaggeredTileLayout].
-  final IndexedScaledTileBuilder indexedScaledTileBuilder;
+  final IndexedScaledTileBuilder? indexedScaledTileBuilder;
 
   /// Set the scrollDirection
   final Axis scrollDirection;
@@ -226,7 +226,7 @@ class SearchBar<T> extends StatefulWidget {
     this.onError,
     this.emptyWidget = const SizedBox.shrink(),
     required this.header,
-    required this.placeHolder,
+    this.placeHolder,
     this.icon = const Icon(Icons.search),
     this.hintText = "",
     this.hintStyle = const TextStyle(color: Color.fromRGBO(142, 142, 147, 1)),
@@ -239,7 +239,7 @@ class SearchBar<T> extends StatefulWidget {
     this.searchBarStyle = const SearchBarStyle(),
     this.crossAxisCount = 1,
     this.shrinkWrap = false,
-    required this.indexedScaledTileBuilder,
+    this.indexedScaledTileBuilder,
     this.scrollDirection = Axis.vertical,
     this.mainAxisSpacing = 0.0,
     this.crossAxisSpacing = 0.0,
