@@ -59,10 +59,10 @@ class _HomeState extends State<Home> {
           placeHolder: Text("placeholder"),
           cancellationWidget: Text("Cancel"),
           emptyWidget: Text("empty"),
-          indexedScaledTileBuilder: (int index) => ScaledTile.count(1, index.isEven ? 2 : 1),
+          indexedScaledTileBuilder: (int index) => ScaledTile.count(1, index.isEven ? 2 : 1, Container()),
           header: Row(
             children: <Widget>[
-              RaisedButton(
+              ElevatedButton(
                 child: Text("sort"),
                 onPressed: () {
                   _searchBarController.sortList((Post a, Post b) {
@@ -70,13 +70,13 @@ class _HomeState extends State<Home> {
                   });
                 },
               ),
-              RaisedButton(
+              ElevatedButton(
                 child: Text("Desort"),
                 onPressed: () {
                   _searchBarController.removeSort();
                 },
               ),
-              RaisedButton(
+              ElevatedButton(
                 child: Text("Replay"),
                 onPressed: () {
                   isReplay = !isReplay;
