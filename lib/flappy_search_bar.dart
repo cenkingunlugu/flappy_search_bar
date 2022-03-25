@@ -344,7 +344,7 @@ class _SearchBarState<T> extends State<SearchBar<T>>
         mainAxisSpacing: widget.mainAxisSpacing,
         crossAxisSpacing: widget.crossAxisSpacing,
 
-        children: items.map<Widget>((e) => e as Widget).toList(),
+        children: items.map((e) => widget.onItemFound(e, items.indexOf(e))).toList(),
       ),
     );
   }
