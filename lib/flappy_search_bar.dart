@@ -31,7 +31,8 @@ class SearchBarController<T> {
   CancelableOperation? _cancelableOperation;
   int minimumChars = 0;
 
-  void setTextController(TextEditingController _searchQueryController, minimunChars) {
+  void setTextController(
+      TextEditingController _searchQueryController, minimunChars) {
     this._searchQueryController = _searchQueryController;
     this.minimumChars = minimunChars;
   }
@@ -215,6 +216,9 @@ class SearchBar<T> extends StatefulWidget {
   /// Set a padding on the list
   final EdgeInsetsGeometry listPadding;
 
+  // Set cursor colors
+  final Color cursorColor;
+
   SearchBar({
     Key? key,
     required this.onSearch,
@@ -234,7 +238,7 @@ class SearchBar<T> extends StatefulWidget {
     this.textStyle = const TextStyle(color: Colors.black),
     this.cancellationWidget = const Text("Cancel"),
     required this.onCancelled,
-    this.suggestions = const [],
+    required this.suggestions,
     this.buildSuggestion,
     this.searchBarStyle = const SearchBarStyle(),
     this.crossAxisCount = 1,
@@ -246,6 +250,7 @@ class SearchBar<T> extends StatefulWidget {
     this.listPadding = const EdgeInsets.all(0),
     this.searchBarPadding = const EdgeInsets.all(0),
     this.headerPadding = const EdgeInsets.all(0),
+    this.cursorColor = Colors.black,
   }) : super(key: key);
 
   @override
@@ -265,10 +270,10 @@ class _SearchBarState<T> extends State<SearchBar<T>>
   @override
   void initState() {
     super.initState();
-    searchBarController =
-        widget.searchBarController;
+    searchBarController = widget.searchBarController;
     searchBarController!.setListener(this);
-    searchBarController!.setTextController(_searchQueryController, widget.minimumChars);
+    searchBarController!
+        .setTextController(_searchQueryController, widget.minimumChars);
   }
 
   @override
@@ -340,11 +345,10 @@ class _SearchBarState<T> extends State<SearchBar<T>>
       padding: widget.listPadding,
       child: StaggeredGrid.count(
         crossAxisCount: widget.crossAxisCount,
-
         mainAxisSpacing: widget.mainAxisSpacing,
         crossAxisSpacing: widget.crossAxisSpacing,
-
-        children: items.map((e) => widget.onItemFound(e, items.indexOf(e))).toList(),
+        children:
+            items.map((e) => widget.onItemFound(e, items.indexOf(e))).toList(),
       ),
     );
   }
@@ -356,8 +360,7 @@ class _SearchBarState<T> extends State<SearchBar<T>>
       return widget.loader;
     } else if (_searchQueryController.text.length < widget.minimumChars) {
       if (widget.placeHolder != null) return widget.placeHolder!;
-      return _buildListView(
-          widget.suggestions, widget.buildSuggestion);
+      return _buildListView(widget.suggestions, widget.buildSuggestion);
     } else if (_list.isNotEmpty) {
       return _buildListView(_list, widget.onItemFound);
     } else {
@@ -393,6 +396,7 @@ class _SearchBarState<T> extends State<SearchBar<T>>
                           controller: _searchQueryController,
                           onChanged: _onTextChanged,
                           style: widget.textStyle,
+                          cursorColor: widget.cursorColor,
                           decoration: InputDecoration(
                             icon: widget.icon,
                             border: InputBorder.none,
